@@ -162,9 +162,42 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
       return Container(
+        height: widget.adType == NativeAdType.NATIVE_AD
+            ? (isLoadStart ? widget.height : containerHeight)
+            : widget.bannerAdSize.height.toDouble(),,
         width: widget.width,
-        height: widget.height,
-        child: Text("Native Ads iOS is currently not supported."),
+        color: Colors.transparent,
+        child: UiKitView(
+          viewType: NATIVE_AD_CHANNEL,
+          onPlatformViewCreated: _onNativeAdViewCreated,
+          creationParamsCodec: StandardMessageCodec(),
+          creationParams: <String, dynamic>{
+            "id": widget.placementId,
+            "banner_ad":
+            widget.adType == NativeAdType.NATIVE_BANNER_AD ? true : false,
+            // height param is only for Banner Ads. Native Ad's height is
+            // governed by container.
+            "height": widget.bannerAdSize.height,
+            "bg_color": widget.backgroundColor == null
+                ? null
+                : _getHexStringFromColor(widget.backgroundColor),
+            "title_color": widget.titleColor == null
+                ? null
+                : _getHexStringFromColor(widget.titleColor),
+            "desc_color": widget.descriptionColor == null
+                ? null
+                : _getHexStringFromColor(widget.descriptionColor),
+            "button_color": widget.buttonColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonColor),
+            "button_title_color": widget.buttonTitleColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonTitleColor),
+            "button_border_color": widget.buttonBorderColor == null
+                ? null
+                : _getHexStringFromColor(widget.buttonBorderColor),
+          },
+        ),
       );
     } else {
       return Container(
