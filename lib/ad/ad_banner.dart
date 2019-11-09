@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 
 import 'package:facebook_audience_network/constants.dart';
 
@@ -89,7 +90,7 @@ class _FacebookBannerAdState extends State<FacebookBannerAd>
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (Platform.isAndroid) {
       return Container(
         height: containerHeight,
         color: Colors.transparent,
@@ -104,7 +105,7 @@ class _FacebookBannerAdState extends State<FacebookBannerAd>
           creationParamsCodec: StandardMessageCodec(),
         ),
       );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    } else if (Platform.isIOS) {
       return Container(
         height: containerHeight,
         color: Colors.transparent,

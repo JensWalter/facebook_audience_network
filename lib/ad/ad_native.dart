@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 
 import 'package:facebook_audience_network/constants.dart';
 
@@ -122,7 +123,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
 
   @override
   Widget build(BuildContext context) {
-    if (defaultTargetPlatform == TargetPlatform.android) {
+    if (Platform.isAndroid) {
       return Container(
         width: widget.width,
         height: widget.adType == NativeAdType.NATIVE_AD
@@ -160,7 +161,7 @@ class _FacebookNativeAdState extends State<FacebookNativeAd>
           },
         ),
       );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+    } else if (Platform.isIOS) {
       return Container(
         height: widget.adType == NativeAdType.NATIVE_AD
             ? (isLoadStart ? widget.height : containerHeight)
